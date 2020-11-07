@@ -1,0 +1,88 @@
+//建表之前先删
+drop table kaoqin if exists kaoqin;
+create table  kaoqin(
+    name varchar(20) comment '姓名',
+    school varchar(30) comment '学校',
+    major varchar(30) comment '专业',
+    sex varchar(1),
+    sign bit,
+    attendance varchar(10)
+);
+//删除表
+drop table kaoqin;
+drop table kaoqin if exists kaoqin;
+
+//插入数据
+
+insert into 表名 values();//默认全列
+insert into 表名（指定的列）values(指定列的值);
+
+ drop table if exists exam_result;
+ create table exam_result character set utf8mb4(
+     id int,
+     name varchar(20),
+     chinese decimal(30),
+     english decimal(30),
+     math decimal(30)
+ );
+
+insert into exam_result (id,name,chinese,english) values
+(1,'孙悟空'，'78','89','78');
+(2,'猪八戒'，'67','98','90'),
+(3,'孙权'，'78','86','89'),
+(4,'孙悟空'，'74','68','95');
+
+
+
+
+//总结：
+1.显示当前数据库 show databases;
+2.创建数据库
+     create database test;
+     create database if not exists test;
+     create database if not exists test character set utf8mb4;
+3.使用数据库
+    use test;
+4.删除数据库
+    drop database test;
+    drop database if exists test;
+5.显示数据库中表
+在查看数据空中的内容时，需要先使用该数据库：use test;
+    show tables;
+6.查看表的结构
+    desc student;
+7.创建表
+    drop table if exists student;//在建表之前先删除（如果存在）
+    create table student(
+        id int ,
+        name varchar(20),
+        chinese decimal(3,1),
+        math decimal(3,1),
+        english decimal(3,1)
+    );
+
+     create table student character set utf8mb4(//编码格式
+    ->         id int ,
+    ->         name varchar(20),
+    ->         chinese decimal(3,1),
+    ->         math decimal(3,1),
+    ->         english decimal(3,1)
+    ->     );
+8.插入数据
+    insert into student (id,name,chinese,math,english) values
+    (1,'唐三藏',67,89,75),
+    (2,'孙悟空',78,85,43),
+    (3,'孙权',90,89,75),
+    (4,'曹操',67,74,75),
+    (5,'宋公明',89,70,75);
+    
+9.查询
+    select id ,name,math from student;
+    select 1 from student;
+    select id,name,10 from student;//表达式不包含字段
+    select id,name,english+10 from student;
+    //别名
+    select id number,name n,chinese c,math m ,english e,chinese+math+english 总分 from student;
+
+
+
