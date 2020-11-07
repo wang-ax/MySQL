@@ -1,0 +1,76 @@
+select * from exam order by math;//默认是升序
+
+select * from exam order by math,chinese;
+
+select * from exam order by math desc ,chinese desc;
+查询1982-04-02 到 1982-06-01
+select * from date_test where  start_time <= '1982-06-01 00:00:00' and end_time >= '1982-04-02 00:00:00';
+
+select * from exam_result order by chinese desc limit 1,1;
+
+select * from exam_result order by  chinese+math+english  desc limit 1,4;
+
+distinct 去重
+selcet distinct math from exam_result;//去重
+order by 排序
+select name，qq from order by qq desc;//按降序进行排序
+selcet * from student order by math;
+//默认是升序的，ASC（升序）
+
+select name，chinese + english + math total from exam_result 
+        order by total desc;
+
+条件查询：where
+比较运算符：>,>=,<,<=,=,<=>,!=,<>,between and ,in ,is null,is not null,like(模糊查询)
+selcet name，english from exam_result where english < 60;
+select name，chinese,english from exam_result where chinese > english;
+select name，chinese+math + english 总分 from exam_result where chinese +math +english <200;
+
+逻辑运算符:and ,or ,not 
+select * from exam_result where chinese >80 and english > 80;
+selcet * from exam_result where chinese >80 or english >80;
+and 优先级高
+select * from exam_result where chinese >80 or math >70 and english >70;
+先算括号内的
+select * from exam_result where (chinese > 80 or math >70) and english >70;
+范围查询：
+select  name，chinese from exam_result where chinese between 80 and 90;
+select  name,math from exam_result where math in (58,59,98,99);
+select name,math from exam_result where math = 58 or math = 59 or math = 98 or math =99;
+模糊查询：like
+selcet name from exam_result where name like '孙%';//% 匹配任意多个字符
+selcet name from exam_result where name like '孙_'//_  只能代表一个字符
+null 查询
+selcet name,qq from student where qq is not null;
+select name ,qq from student where qq is null;
+分页查询：limit
+selcet id,name,math,chinese,english from exam_result order by id limit 3 offset 0;
+
+//修改update
+update  exam_result set math = 80 where name = '孙悟空';
+
+update exam_result set chinese = chinese *2;
+
+//删除 Delete
+delete  from exam_result where name = '孙悟空';
+delete from for_delete;//删除整张数据表
+
+总结：
+新增：
+    单行插入
+    多行插入
+查询：
+    全列查询
+    指定列查询
+    查询表达式字段
+    别名
+    去重distinct
+    排序orderby
+    条件查询：where
+        比较运算符
+        逻辑运算符
+修改：update 表名 set 字段1 = value1，字段2 = value2....where 条件;
+删除：delete from 表 where 条件;
+
+
+
