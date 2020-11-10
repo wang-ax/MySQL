@@ -1,0 +1,61 @@
+create table aaa(
+    a1 vachar(10),
+    a2 vachar(10)
+);
+
+create table bbb(
+    b1 vachar(10),
+    b2 vachar(10)
+);
+insert into aaa values('a','aa');
+insert into aaa values('b','bb');
+insert into bbb values('1','11');
+insert into bbb values('2','22');
+
+select * from aaa,bbb;
+//相当于双重的for循环
+
+//内连接
+查询所有同学的总成绩，及同学的个人信息
+select student.id,student.sn,student.name,student.qq_mail,sum(score.score)
+from student ,score 
+where student.id = score.student_id 
+group by score.student_id;
+
+select stu.id,stu.sn,stu.name,stu.qq_mail,sum(sco.score)
+from student stu
+join score sco on  stu.id = sco.student_id
+group by sco.student_id;
+
+//查询所有同学的成绩，及同学的个人信息
+SELECT
+stu.id,
+stu.sn,
+stu.NAME,
+stu.qq_mail,
+sco.score,
+sco.course_id,
+cou.NAME
+FROM
+student stu
+JOIN score sco ON stu.id = sco.student_id
+JOIN course cou ON sco.course_id = cou.id
+ORDER BY stu.id;
+
+
+//外连接
+//查询所有同学的成绩，及同学的个人信息，如果该同学没有成绩，也需要显示
+SELECT
+stu.id,
+stu.sn,
+stu.NAME,
+stu.qq_mail,
+sco.score,
+sco.course_id,
+cou.NAME
+FROM
+student stu
+LEFT JOIN score sco ON stu.id = sco.student_id
+LEFT JOIN course cou ON sco.course_id = cou.id
+ORDER BY
+stu.id;
