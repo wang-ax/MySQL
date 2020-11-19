@@ -1,0 +1,58 @@
+
+分数表，班级表，学生表，课程表
+select cla.name,stu.id,stu.sn,stu.name,stu.qq_mail,sco.score,cou.name
+from student stu
+join  score sco on stu.id = sco.student_id
+join  course cou on  sco.course_id = cou.id
+join classes cla on  stu.classes_id = cla.id
+and cla.name = '计算机系2019级1班';
+
+
+
+-- 新增貂蝉同学的借阅记录：诗经，从2019年9月25日17:50到2019年10月25日17:50
+ insert into borrow_info(book_id, student_id, start_time, end_time) select b.id,s.id,'2019-09-25 17:50:00','2019-10-25 17:50:00' from book b,student s where b.name= '诗经' and s.name='貂蝉';
+
+ delete from borrow_info where borrow_info.id = 19;
+
+ --查询计算机分类下的图书借阅信息
+ select book.name book_name,book.author,student.name student_name,borrow_info.start_time,borrow_info.end_time 
+ from borrow_info 
+ join  book on book.id = borrow_info.book_id 
+ join category on book.category_id = category.id 
+ join student on borrow_info.student_id = student.id
+ and category.name = '计算机' ;
+
+--删除id最大的一条借阅记录
+select * from borrow_info where id = (select borrow_info.id from (select max(id) id from borrow_info));
+delete  from borrow_info where id = (select borrow_info.id from (select max(id) id from borrow_info) borrow_info);
+
+
+--查找所有已经分配部门的员工的last_name和first_name以及dept_no(请注意输出描述里各个列的前后顺序)
+--使用内连接
+select emp.last_name,emp.first_name,dep.dept_no
+from employees emp 
+join dept_emp dep on emp.emp_no = dep.emp_no;
+
+--查找所有员工的last_name和first_name以及对应部门编号dept_no，
+--也包括暂时没有分配具体部门的员工(请注意输出描述里各个列的前后顺序)
+--考虑使用左外连接，员工表中的所有数据都要显示出来
+select emp.last_name,emp.first_name,dep.dept_no
+from   employees emp
+left join dept_emp  dep
+on emp.emp_no = dep.emp_no;
+
+--查找所有员工入职时候的薪水情况，给出emp_no以及salary，
+-- 并按照emp_no进行逆序(请注意，一个员工可能有多次涨薪的情况)
+--
+select employees.emp_no, salaries.salary
+from employees 
+left join salaries on employees.emp_no = salaries.emp_no
+and employees.hire_date = salaries.from_date
+order by employees.emp_no desc;
+
+--查找薪水变动超过15次的员工号emp_no以及其对应的变动次数t
+--有一条记录，就证明薪水变动了，count(salary)
+select emp_no,count(salary) t
+from salaries
+group by emp_no
+having count(salary)>15;
